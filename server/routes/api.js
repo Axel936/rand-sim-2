@@ -18,6 +18,7 @@ router.post('/login/', function (req, res) {
     })
 })
 
+
 router.post('/message', function (req, res) {
     const payload = req.body
     const message = new Message({ sender: payload.sender, text: payload.text })
@@ -29,4 +30,10 @@ router.post('/message', function (req, res) {
     })
 })
 
+router.get(`/verifyuser/:userName`, function(req, res){ 
+    let userName = req.params.userName
+    User.findOne({name: userName}, function(err, exitst){
+        exitst ? res.send(true) : res.send(false)
+    })
+})
 module.exports = router

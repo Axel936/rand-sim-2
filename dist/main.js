@@ -25,10 +25,17 @@ const logOut = function () {
 }
 
 const sendMessage = function () {
-    const completeRequest = user.sendMessage($("#new-message").val(), $("#to").val())
-    completeRequest.then(function () {
-        render(MESSAGES_TEMPLATE, { messages: user.messages }, MESSAGE_AREA)
+    let input = $("#to").val()
+    $.get(`/verifyuser/${input}`, function(userExists){
+        if (userExists){
+
+            const completeRequest = user.sendMessage($("#new-message").val(), $("#to").val())
+            completeRequest.then(function () {
+                render(MESSAGES_TEMPLATE, { messages: user.messages }, MESSAGE_AREA)
+            })
+        } 
     })
+
 }
 
 render(LOGIN_TEMPLATE, { isLoggedIn: false }, LOGIN_AREA)
